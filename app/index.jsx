@@ -1,111 +1,77 @@
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import img from "../assets/images/GOLD-6487-CareerGuide-Batch04-Images-GraphCharts-01-Line.png";
 import cart from "../assets/images/download.jpeg";
+import { Stack } from "expo-router";
 
-const index = () => {
+export default function index() {
   return (
     <SafeAreaView style={styles.safeview}>
       <ScrollView>
-      <View style={{ padding: 10 }}>
-        <View style={styles.hero}>
+        {/* Account Balance Section */}
+        <View style={styles.balanceCard}>
           <View>
-            <Text style={{ fontSize: 12, padding: 2 }}>Account Balance</Text>
-            <Text style={{ fontSize: 18, padding: 2, fontWeight: 600 }}>
-              13,240.11
-            </Text>
-            <Text style={{ fontSize: 12, padding: 2 }}>
-              3.43% (+4.54%) vs last week
-            </Text>
+            <Text style={styles.balanceLabel}>Account Balance</Text>
+            <Text style={styles.balanceAmount}>₹13,240.11</Text>
+            <Text style={styles.balanceSubText}>3.43% (+4.54%) vs last week</Text>
           </View>
-          <View>
+          <View style={styles.chartSection}>
+            <Text style={styles.changeBox}>₹2,450.00</Text>
             <Image source={img} style={styles.img} />
           </View>
         </View>
-      </View>
 
-      <View style={styles.main2}>
-        <View style={styles.card}>
-          <Image source={cart} style={styles.cartimg} />
-          <Text style={{ textAlign: "center", marginTop: 10 }}>
-            Short-Term-Equity <br /> Baskest
-          </Text>
+        {/* Basket Cards */}
+        <View style={styles.main2}>
+          <View style={styles.card}>
+            <Image source={cart} style={styles.cartimg} />
+            <Text style={styles.cardText}>Short-Term Equity{'\n'}Baskets</Text>
+          </View>
+          <View style={styles.card}>
+            <Image source={cart} style={styles.cartimg} />
+            <Text style={styles.cardText}>Long-Term Equity{'\n'}Baskets</Text>
+          </View>
         </View>
-        <View style={styles.card}>
-          <Image source={cart} style={styles.cartimg} />
-          <Text style={{ textAlign: "center", marginTop: 10 }}>
-            Short-Term-Equity <br /> Baskest
-          </Text>
-        </View>
-      </View>
 
-      <View
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
-          marginTop: 10,
-          padding: 15,
-        }}
-      >
-        <Text style={{ fontWeight: 500, fontSize: 17 }}>
-          Invest on Trending Stocks
-        </Text>
-        <Text style={{ fontWeight: 500, fontSize: 15 }}> Edit watchlist</Text>
-      </View>
-      <Item
-        title={"BSE"}
-        msg={"adnai ports"}
-        ammount={"4000"}
-        rating={"2% 2 ,4 jdp"}
-      />
-      <Item
-        title={"BSE"}
-        msg={"adnai ports"}
-        ammount={"4000"}
-        rating={"2% 2 ,4 jdp"}
-      />
-      <Item
-        title={"BSE"}
-        msg={"adnai ports"}
-        ammount={"4000"}
-        rating={"2% 2 ,4 jdp"}
-      /><Item
-        title={"BSE"}
-        msg={"adnai ports"}
-        ammount={"4000"}
-        rating={"2% 2 ,4 jdp"}
-      />
+        {/* Trending Stocks Header */}
+        <View style={styles.trendingHeader}>
+          <Text style={styles.trendingTitle}>Invest on Trending Stocks</Text>
+          <Text style={styles.editWatchlist}>Edit Watchlist</Text>
+        </View>
+
+        {/* Trending Stock Items */}
+        <Item title="BSE" msg="Adani Ports PVT LTD" amount="₹49.00" rating="+1.15%" />
+        <Item title="NSE" msg="Reliance Industries LTD" amount="₹2,762.30" rating="+0.30%" />
+        <Item title="BSE" msg="Tata Power LTD" amount="₹62.30" rating="+1.85%" />
+
+        {/* Buttons */}
+        <TouchableOpacity style={styles.linkBroker}>
+          <Text style={styles.btnText}>Link with broker</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.premiumBtn}>
+          <Text style={styles.btnText}>View Premium Subscription</Text>
+        </TouchableOpacity>
+        
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
-export default index;
-
-// import cart from "../assets/images/download.jpeg";
-
-let Item = ({ title, msg, ammount, rating }) => {
+const Item = ({ title, msg, amount, rating }) => {
   return (
-    <View style={{ padding: 10 }}>
+    <View style={styles.itemWrapper}>
       <View style={styles.container1}>
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 10,
-          }}
-        >
+        <View style={styles.leftItem}>
           <Image source={cart} style={{ width: 50, height: 50 }} />
           <View>
-            <Text>{title}</Text>
-            <Text>{msg}</Text>
+            <Text style={styles.stockTitle}>{title}</Text>
+            <Text style={styles.stockMsg}>{msg}</Text>
           </View>
         </View>
-        <View>
-          <Text style={{ padding: 2 }}>{ammount}</Text>
-          <Text style={{ color: "green" }}>{rating}</Text>
+        <View style={{ alignItems: "flex-end" }}>
+          <Text style={styles.amount}>{amount}</Text>
+          <Text style={styles.rating}>{rating}</Text>
         </View>
       </View>
     </View>
@@ -114,54 +80,151 @@ let Item = ({ title, msg, ammount, rating }) => {
 
 const styles = StyleSheet.create({
   safeview: {
-    // backgroundColor:"blue",
     flex: 1,
+    backgroundColor: "#0A1F44",
   },
-  hero: {
-    display: "flex",
+  header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // borderWidth: 2,
     padding: 15,
-    marginTop: 20,
-    borderRadius: 10,
     alignItems: "center",
-    backgroundColor: "gray",
+  },
+  logo: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  headerTitle: {
+    color: "white",
+    fontSize: 16,
+  },
+  balanceCard: {
+    backgroundColor: "#1F2E55",
+    borderRadius: 15,
+    padding: 20,
+    margin: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  balanceLabel: {
+    color: "white",
+    fontSize: 13,
+  },
+  balanceAmount: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 4,
+  },
+  balanceSubText: {
+    color: "#B0B0B0",
+    fontSize: 12,
+  },
+  chartSection: {
+    alignItems: "center",
+  },
+  changeBox: {
+    backgroundColor: "#C1FFDA",
+    color: "green",
+    fontWeight: "bold",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
+    fontSize: 12,
+    marginBottom: 8,
   },
   img: {
     width: 100,
-    height: 100,
+    height: 60,
   },
   main2: {
-    display: "flex",
     flexDirection: "row",
-    justifyContent: "center",
-    gap: 10,
-    padding: 10,
-    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginTop: 10,
   },
   card: {
-    height: 200,
-    width: 190,
-    backgroundColor: "gray",
-    borderRadius: 10,
-    display: "flex",
+    height: 180,
+    width: 150,
+    backgroundColor: "#1F2E55",
+    borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center",
-    padding: 10,
   },
   cartimg: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
+  },
+  cardText: {
+    color: "white",
+    textAlign: "center",
+    marginTop: 10,
+    fontSize: 14,
+  },
+  trendingHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    marginTop: 20,
+  },
+  trendingTitle: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  editWatchlist: {
+    color: "#50C4ED",
+    fontSize: 14,
+  },
+  itemWrapper: {
+    paddingHorizontal: 15,
+    marginTop: 10,
   },
   container1: {
-    display: "flex",
+    backgroundColor: "#23325D",
+    borderRadius: 10,
+    padding: 15,
+    flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+  },
+  leftItem: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 20,
-    backgroundColor: "lightblue",
+    gap: 10,
+  },
+  stockTitle: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  stockMsg: {
+    color: "#B0B0B0",
+    fontSize: 12,
+  },
+  amount: {
+    color: "white",
+    fontWeight: "600",
+  },
+  rating: {
+    color: "lightgreen",
+    fontWeight: "500",
+  },
+  linkBroker: {
+    backgroundColor: "#00D26A",
+    padding: 15,
+    margin: 15,
     borderRadius: 10,
+    alignItems: "center",
+  },
+  premiumBtn: {
+    backgroundColor: "#1F2E55",
+    padding: 15,
+    marginHorizontal: 15,
+    borderRadius: 10,
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  btnText: {
+    color: "white",
+    fontWeight: "600",
   },
 });
